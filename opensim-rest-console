@@ -61,13 +61,17 @@ function readRestSession() {
 	};
 	
 	client.post(BaseURL + "/ReadResponses/"+restSessionID+"/", args, function (data, response) {
-		if(data.ConsoleSession.Line) {
-			for(var i=0; i < data.ConsoleSession.Line.length; i++) {
-				if(data.ConsoleSession.Line[i]._) {
-					console.log(data.ConsoleSession.Line[i]._);
+		try {
+			if(data.ConsoleSession.Line) {
+				for(var i=0; i < data.ConsoleSession.Line.length; i++) {
+					if(data.ConsoleSession.Line[i]._) {
+						console.log(data.ConsoleSession.Line[i]._);
+					}
 				}
+				readLine.prompt();
 			}
-			readLine.prompt();
+		} catch(err) {
+			console.log("oops "+err);
 		}
 	});
 }
