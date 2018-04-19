@@ -33,8 +33,14 @@ function openRestSession() {
 	};
 
 	client.post(BaseURL + "/StartSession/", args, function (data, response) {
-		restSessionID = data.ConsoleSession.SessionID;
-		eventEmitter.emit('rest_session_opened');
+		try {
+			restSessionID = data.ConsoleSession.SessionID;
+			if(restSessionID) {
+				eventEmitter.emit('rest_session_opened');
+			}
+		} catch(err) {
+			console.log("oops "+err+"\nstatusMessage: "+response.statusMessage);
+		}
 	});
 }
 
